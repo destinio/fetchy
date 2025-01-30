@@ -1,5 +1,11 @@
+import SearchBox from "./components/SearchBox";
+
 function App() {
-  return <h2>Welcome</h2>;
+  return (
+    <div>
+      <SearchBox />
+    </div>
+  );
 }
 
 export default App;

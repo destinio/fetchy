@@ -9,14 +9,22 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AppProvider } from "./state/AppProvider.tsx";
 import LoginPage from "./pages/Login.tsx";
 import ProtectedLayout from "./layouts/ProtectedLayout.tsx";
+import About from "./pages/About.tsx";
+import PublicLayout from "./layouts/PublicLayout.tsx";
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
+  // PUBLIC ROUTES
   {
     path: "/login",
-    element: <LoginPage />,
+    element: <PublicLayout element={<LoginPage />} />,
   },
+  {
+    path: "/about",
+    element: <PublicLayout element={<About />} />,
+  },
+  // PRIVATE ROUTES
   {
     path: "/",
     element: <ProtectedLayout element={<App />} />,

@@ -1,16 +1,8 @@
-import { BASE_URL, BREEDS_URL, SEARCH_URL } from "@/constants";
-
-export interface Dog {
-  id: string;
-  img: string;
-  name: string;
-  age: number;
-  zip_code: string;
-  breed: string;
-}
+import { BREEDS_URL, SEARCH_URL } from "@/constants";
+import { IDog } from "@/types";
 
 // Get Breeds
-export async function getBreeds(): Promise<Dog[]> {
+export async function getBreeds(): Promise<IDog[]> {
   const response = await fetch(BREEDS_URL, {
     method: "GET",
     credentials: "include",
