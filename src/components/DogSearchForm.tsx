@@ -29,9 +29,9 @@ export const DogSearchSchema = z.object({
 export function DogSearchForm() {
   const {
     data: breeds,
-    isLoading: isBreedsLoading,
-    isFetching: isBreedsFetching,
-    error: breedsError,
+    isLoading: _isBreedsLoading,
+    isFetching: _isBreedsFetching,
+    error: _breedsError,
   } = useBreeds();
 
   const { onSubmit } = useDogs();

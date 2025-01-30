@@ -29,9 +29,9 @@ export function DogsProvider({ children }: IDogsProps) {
 
   const {
     data: dogs,
-    isLoading: isDogsLoading,
-    isFetching: isDogsFetching,
-    error: dogsError,
+    isLoading: _isDogsLoading,
+    isFetching: _isDogsFetching,
+    error: _dogsError,
     refetch,
   } = useDogsSearch(searchParams, {
     enabled: hasSubmitted, // Only fetch data after submission
