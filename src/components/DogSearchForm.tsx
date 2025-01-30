@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"; // import useState
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -14,12 +13,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useDogsSearch } from "@/hooks/useDogsSearch";
 import { MultiSelect } from "./ui/multi-select";
 import { useBreeds } from "@/hooks/useBreeds";
 import { useDogs } from "@/hooks/useDogs";
 
-const DogSearchSchema = z.object({
+export const DogSearchSchema = z.object({
   breeds: z.array(z.string()).optional(),
   zipCodes: z.string().optional(),
   ageMin: z.string().optional(),
@@ -35,7 +33,8 @@ export function DogSearchForm() {
     isFetching: isBreedsFetching,
     error: breedsError,
   } = useBreeds();
-  const { submitDogs } = useDogs();
+
+  const { onSubmit } = useDogs();
 
   const form = useForm<z.infer<typeof DogSearchSchema>>({
     resolver: zodResolver(DogSearchSchema),
@@ -48,51 +47,6 @@ export function DogSearchForm() {
       sort: "",
     },
   });
-
-  const [searchParams, setSearchParams] = useState({
-    breeds: undefined,
-    zipCodes: undefined,
-    ageMin: undefined,
-    ageMax: undefined,
-    size: undefined,
-    sort: undefined,
-  });
-
-  const [hasSubmitted, setHasSubmitted] = useState(false); // Track if the form has been submitted
-
-  const {
-    data: dogs,
-    isLoading: isDogsLoading,
-    isFetching: isDogsFetching,
-    error: dogsError,
-    refetch,
-  } = useDogsSearch(searchParams, {
-    enabled: hasSubmitted, // Only fetch data after submission
-  });
-
-  async function onSubmit(data: z.infer<typeof DogSearchSchema>) {
-    const params = {
-      breeds: data.breeds?.length ? data.breeds : undefined,
-      zipCodes: data.zipCodes ? data.zipCodes.split(",") : undefined,
-      ageMin: data.ageMin ? Number(data.ageMin) : undefined,
-      ageMax: data.ageMax ? Number(data.ageMax) : undefined,
-      size: data.size ? Number(data.size) : undefined,
-      sort: data.sort || undefined,
-    };
-
-    setSearchParams(params as any); // Update search params with the form data
-    setHasSubmitted(true); // Mark the form as submitted
-    await refetch(); // Trigger the query manually
-  }
-
-  useEffect(() => {
-    if (dogs) {
-      submitDogs(dogs.resultIds);
-    }
-  }, [dogs]);
-
-  const isLoading =
-    isBreedsLoading || isDogsLoading || isBreedsFetching || isDogsFetching;
 
   if (!breeds) {
     return <div>Error loading breeds</div>;

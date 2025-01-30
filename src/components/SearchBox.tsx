@@ -8,7 +8,12 @@ import { DogSearchForm } from "./DogSearchForm";
 
 export default function SearchBox() {
   return (
-    <Accordion type="single" collapsible defaultValue="search-box">
+    <Accordion
+      className="mb-8"
+      type="single"
+      collapsible
+      defaultValue="search-box"
+    >
       <AccordionItem value="search-box">
         <AccordionTrigger>Search Options</AccordionTrigger>
         <AccordionContent>
