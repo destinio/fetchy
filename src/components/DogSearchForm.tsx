@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useDogsSearch } from "@/hooks/useDogsSearch";
 import { MultiSelect } from "./ui/multi-select";
+import { useBreeds } from "@/hooks/useBreeds";
 
 const DogSearchSchema = z.object({
   breeds: z.array(z.string()).optional(),
@@ -28,6 +29,13 @@ const DogSearchSchema = z.object({
 });
 
 export function DogSearchForm() {
+  const {
+    data: breeds,
+    isLoading: isBreedsLoading,
+    isFetching: isBreedsFetching,
+    error: breedsError,
+  } = useBreeds();
+
   const form = useForm<z.infer<typeof DogSearchSchema>>({
     resolver: zodResolver(DogSearchSchema),
     defaultValues: {
@@ -40,7 +48,13 @@ export function DogSearchForm() {
     },
   });
 
-  const { data, isLoading, error, refetch } = useDogsSearch({
+  const {
+    data: dogs,
+    isLoading: isDogsLoading,
+    isFetching: isDogsFetching,
+    error: dogsError,
+    refetch,
+  } = useDogsSearch({
     breeds: form.watch("breeds")?.length ? form.watch("breeds") : undefined,
     zipCodes: form.watch("zipCodes")
       ? form.watch("zipCodes")?.split(",")
@@ -56,6 +70,13 @@ export function DogSearchForm() {
     refetch();
   }
 
+  const isLoading =
+    isBreedsLoading || isDogsLoading || isBreedsFetching || isDogsFetching;
+
+  if (!breeds) {
+    return <div>Error loading breeds</div>;
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
@@ -67,11 +88,9 @@ export function DogSearchForm() {
               <FormLabel>Breeds</FormLabel>
               <FormControl>
                 <MultiSelect
-                  options={[
-                    { label: "Labrador", value: "labrador" },
-                    { label: "Beagle", value: "beagle" },
-                    { label: "Poodle", value: "poodle" },
-                  ]}
+                  options={breeds.map((breed) => {
+                    return { label: breed, value: breed };
+                  })}
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                   placeholder="Select breeds"

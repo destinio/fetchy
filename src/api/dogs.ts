@@ -1,8 +1,7 @@
 import { BREEDS_URL, SEARCH_URL } from "@/constants";
-import { IDog } from "@/types";
 
 // Get Breeds
-export async function getBreeds(): Promise<IDog[]> {
+export async function getBreeds(): Promise<string[]> {
   const response = await fetch(BREEDS_URL, {
     method: "GET",
     credentials: "include",
