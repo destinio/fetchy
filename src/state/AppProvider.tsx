@@ -1,14 +1,11 @@
-import { loginApi } from "@/api/userApi";
+import { loginApi, logoutApi } from "@/api/userApi";
+import { IUser } from "@/types";
 import React, { useState } from "react";
-
-export interface IUser {
-  name: string;
-  email: string;
-}
 
 export interface IAppValues {
   user: IUser;
   login: (user: IUser) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export const AppContext = React.createContext<IAppValues>(null!);
@@ -27,7 +24,12 @@ export function AppProvider({ children }: IAppProps) {
       setUser({ name, email });
     }
   }
-  const value = { login, user };
+  async function logout() {
+    await logoutApi();
+    setUser(null!);
+  }
+
+  const value = { login, logout, user };
 
   return (
     <AppContext.Provider value={value}>

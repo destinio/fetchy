@@ -7,13 +7,19 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AppProvider } from "./state/AppProvider.tsx";
+import LoginPage from "./pages/Login.tsx";
+import ProtectedLayout from "./layouts/ProtectedLayout.tsx";
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
+    path: "/login",
+    element: <LoginPage />,
+  },
+  {
     path: "/",
-    element: <App />,
+    element: <ProtectedLayout element={<App />} />,
   },
 ]);
 

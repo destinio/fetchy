@@ -1,15 +1,5 @@
-import "./App.css";
-import LoginForm from "./components/LoginForm";
-import MainLayout from "./layouts/MainLayout";
-
 function App() {
-  return (
-    <MainLayout>
-      <div>
-        <LoginForm />
-      </div>
-    </MainLayout>
-  );
+  return <h2>Welcome</h2>;
 }
 
 export default App;
