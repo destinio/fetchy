@@ -12,7 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { login } from "@/api/login";
+import { useApp } from "@/hooks/useApp";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -20,6 +20,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+  const { login } = useApp();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -32,6 +33,7 @@ export default function LoginForm() {
   async function onSubmit({ name, email }: z.infer<typeof formSchema>) {
     login({ name, email });
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
