@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 interface NavBarLinkProps {
   href?: string;
   onClick?: () => void;
@@ -8,9 +10,9 @@ export default function NavBarLink({ href, text, onClick }: NavBarLinkProps) {
   return (
     <li>
       {href ? (
-        <a href={href} className={classes}>
+        <Link to={href} className={classes}>
           {text}
-        </a>
+        </Link>
       ) : onClick ? (
         <button className={classes} onClick={() => onClick()}>
           {text}

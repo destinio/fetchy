@@ -22,7 +22,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/about",
-    element: <PublicLayout element={<About />} />,
+    element: <ProtectedLayout element={<About />} />,
   },
   // PRIVATE ROUTES
   {
