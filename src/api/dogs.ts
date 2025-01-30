@@ -1,4 +1,5 @@
-import { BREEDS_URL, SEARCH_URL } from "@/constants";
+import { BREEDS_URL, DOGS_URL, SEARCH_URL } from "@/constants";
+import { IDog } from "@/types";
 
 // Get Breeds
 export async function getBreeds(): Promise<string[]> {
@@ -17,6 +18,24 @@ export async function getBreeds(): Promise<string[]> {
 }
 
 // Search Dogs
+export async function getDogsInfo(dogIds: string[]): Promise<IDog[]> {
+  const response = await fetch(DOGS_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dogIds),
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to get dogs info");
+  }
+
+  const data = await response.json();
+
+  return data;
+}
 
 export interface ISearchOptions {
   breeds?: string[];
@@ -35,9 +54,7 @@ export interface ISearchResponse {
   prev?: string;
 }
 
-export async function searchDogs(
-  options: ISearchOptions,
-): Promise<ISearchResponse> {
+export async function searchDogs(options: ISearchOptions) {
   const params = new URLSearchParams();
 
   if (options.breeds) params.append("breeds", options.breeds.join(","));
@@ -63,5 +80,9 @@ export async function searchDogs(
     throw new Error("Failed to search dogs");
   }
 
-  return response.json();
+  const foundDogs = await response.json();
+
+  const results = await getDogsInfo(foundDogs.resultIds);
+
+  return results;
 }

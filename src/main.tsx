@@ -11,6 +11,7 @@ import LoginPage from "./pages/Login.tsx";
 import ProtectedLayout from "./layouts/ProtectedLayout.tsx";
 import About from "./pages/About.tsx";
 import PublicLayout from "./layouts/PublicLayout.tsx";
+import { DogsProvider } from "./state/DogsProvider.tsx";
 
 const queryClient = new QueryClient();
 
@@ -35,8 +36,10 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <AppProvider>
-        <RouterProvider router={router} />
-        <ReactQueryDevtools initialIsOpen={false} />
+        <DogsProvider>
+          <RouterProvider router={router} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </DogsProvider>
       </AppProvider>
     </QueryClientProvider>
   </StrictMode>,
