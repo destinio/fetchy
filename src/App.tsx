@@ -1,10 +1,16 @@
+import { logout } from "./api/login";
 import "./App.css";
+import LoginForm from "./components/LoginForm";
+import MainLayout from "./layouts/MainLayout";
 
 function App() {
   return (
-    <div>
-      <h1>Welcome</h1>
-    </div>
+    <MainLayout>
+      <div>
+        <LoginForm />
+        <button onClick={() => logout()}>logout</button>
+      </div>
+    </MainLayout>
   );
 }
 
