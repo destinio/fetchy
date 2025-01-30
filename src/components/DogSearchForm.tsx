@@ -1,5 +1,4 @@
-"use client";
-
+import { useState } from "react"; // import useState
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -48,26 +47,35 @@ export function DogSearchForm() {
     },
   });
 
+  const [searchParams, setSearchParams] = useState({
+    breeds: undefined,
+    zipCodes: undefined,
+    ageMin: undefined,
+    ageMax: undefined,
+    size: undefined,
+    sort: undefined,
+  });
+
   const {
     data: dogs,
     isLoading: isDogsLoading,
     isFetching: isDogsFetching,
     error: dogsError,
     refetch,
-  } = useDogsSearch({
-    breeds: form.watch("breeds")?.length ? form.watch("breeds") : undefined,
-    zipCodes: form.watch("zipCodes")
-      ? form.watch("zipCodes")?.split(",")
-      : undefined,
-    ageMin: form.watch("ageMin") ? Number(form.watch("ageMin")) : undefined,
-    ageMax: form.watch("ageMax") ? Number(form.watch("ageMax")) : undefined,
-    size: form.watch("size") ? Number(form.watch("size")) : undefined,
-    sort: form.watch("sort") || undefined,
-  });
+  } = useDogsSearch(searchParams);
 
   function onSubmit(data: z.infer<typeof DogSearchSchema>) {
-    console.log(data);
-    refetch();
+    const params = {
+      breeds: data.breeds?.length ? data.breeds : undefined,
+      zipCodes: data.zipCodes ? data.zipCodes.split(",") : undefined,
+      ageMin: data.ageMin ? Number(data.ageMin) : undefined,
+      ageMax: data.ageMax ? Number(data.ageMax) : undefined,
+      size: data.size ? Number(data.size) : undefined,
+      sort: data.sort || undefined,
+    };
+
+    setSearchParams(params); // Update search params with the form data
+    refetch(); // Refetch with the updated parameters
   }
 
   const isLoading =
