@@ -79,7 +79,10 @@ export function DogSearchForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
         <FormField
           control={form.control}
           name="breeds"
@@ -117,45 +120,47 @@ export function DogSearchForm() {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="ageMin"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Min Age</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder="1" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="ageMax"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Max Age</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder="10" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="size"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Results Size</FormLabel>
-              <FormControl>
-                <Input type="number" placeholder="25" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="flex gap-8">
+          <FormField
+            control={form.control}
+            name="ageMin"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Min Age</FormLabel>
+                <FormControl>
+                  <Input type="number" placeholder="1" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="ageMax"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Max Age</FormLabel>
+                <FormControl>
+                  <Input type="number" placeholder="10" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="size"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Results Size</FormLabel>
+                <FormControl>
+                  <Input type="number" placeholder="25" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <FormField
           control={form.control}
           name="sort"

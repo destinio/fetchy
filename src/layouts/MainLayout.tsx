@@ -6,10 +6,5 @@ interface MainLayoutProps {
 }
 
 export default function MainLayout({ children }: MainLayoutProps) {
-  return (
-    <div className="m-auto p-4 max-w-screen-md">
-      <NavBar />
-      {children}
-    </div>
-  );
+  return <div className="m-auto px-8 max-w-screen-md">{children}</div>;
 }

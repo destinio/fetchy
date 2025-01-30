@@ -2,6 +2,7 @@ import { ReactNode, useEffect } from "react";
 import MainLayout from "./MainLayout";
 import { useApp } from "@/hooks/useApp";
 import { useNavigate } from "react-router-dom";
+import NavBar from "@/components/NavBar";
 
 interface IProtectedLayoutProps {
   element: ReactNode;
@@ -20,5 +21,10 @@ export default function ProtectedLayout({ element }: IProtectedLayoutProps) {
     return null;
   }
 
-  return <MainLayout>{element}</MainLayout>;
+  return (
+    <MainLayout>
+      <NavBar />
+      {element}
+    </MainLayout>
+  );
 }
