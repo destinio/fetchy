@@ -21,6 +21,7 @@ and favorite dogs before generating a match.
 ## 🛠️ Tech Stack
 - ⚛️ **React** with TypeScript for a scalable and maintainable UI.
 - ⚡ **Vite.js** for fast development and optimized builds.
+- 🚏 **React Router** for client-side routing and navigation.
 - 🎨 **Tailwind CSS** for modern, responsive styling.
 - 📦 **React Query** for efficient API data fetching and caching.
 - 🛠 **ShadCN UI** for reusable and accessible components.
