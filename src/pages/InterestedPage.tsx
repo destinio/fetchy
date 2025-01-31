@@ -7,6 +7,7 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useToast } from "@/hooks/use-toast";
 import Confetti from "react-confetti-boom";
 import FetchyMsg from "@/components/FetchyMsg";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function InterestedPage() {
   const {
@@ -18,10 +19,14 @@ export default function InterestedPage() {
 
   const { toast } = useToast();
 
+  const navigate = useNavigate();
+
   if (interestedDogs.length === 0 && !match) {
     return (
       <div className="pt-16 md:pt-32">
-        <FetchyMsg message="You haven't selected any dogs yet! Use the navigation bar above to start your search and find your perfect match." />
+        <FetchyMsg message="You haven't selected any dogs yet! Use the navigation bar above to start your search and find your perfect match.">
+          <Button onClick={() => navigate("/")}>search</Button>
+        </FetchyMsg>
       </div>
     );
   }
@@ -52,13 +57,9 @@ export default function InterestedPage() {
       {!match ? (
         <div>
           <div className="flex flex-col gap-4 justify-center items-center py-16">
-            <FetchyMsg
-              message="
-              Once you see the dogs you are interested go ahead an submit to
-              find a match!
-            "
-            />
-            <Button onClick={() => matchDogs()}>Submit</Button>
+            <FetchyMsg message="Once you've selected the dogs you're interested in, go ahead and submit to find your match!">
+              <Button onClick={() => matchDogs()}>Submit</Button>
+            </FetchyMsg>
           </div>
           <ResponsiveMasonry
             columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
