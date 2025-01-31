@@ -11,3 +11,5 @@ export const DOGS_URL = `${BASE_URL}/dogs`;
 export const DOGS_MATCH_URL = `${BASE_URL}/dogs/match`;
 export const LOCATION_URL = `${BASE_URL}/location`;
 export const LOCATION_SEARCH_URL = `${BASE_URL}/location/search`;
+
+export const LOCAL_STORAGE_KEY = "fetchy";

@@ -57,8 +57,12 @@ export interface ISearchResponse {
 export async function searchDogs(options: ISearchOptions) {
   const params = new URLSearchParams();
 
-  if (options.breeds) params.append("breeds", options.breeds.join(","));
-  if (options.zipCodes) params.append("zipCodes", options.zipCodes.join(","));
+  if (options.breeds && options.breeds.length > 0) {
+    options.breeds.forEach((breed) => params.append("breeds", breed));
+  }
+  if (options.zipCodes && options.zipCodes.length > 0) {
+    options.zipCodes.forEach((zip) => params.append("zipCodes", zip));
+  }
   if (options.ageMin !== undefined)
     params.append("ageMin", options.ageMin.toString());
   if (options.ageMax !== undefined)

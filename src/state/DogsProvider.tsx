@@ -78,6 +78,8 @@ export function DogsProvider({ children }: IDogsProps) {
       from: undefined,
     };
 
+    console.log(params);
+
     setSearchParams(params);
     setHasSubmitted(true);
 

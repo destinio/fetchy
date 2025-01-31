@@ -167,6 +167,7 @@ export default function DogsSearchResults() {
           total,
           handleNextPage,
           handlePrevPage,
+          isLoading: isLoadingState,
         }}
       />
     </div>

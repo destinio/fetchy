@@ -108,13 +108,30 @@ export default function InterestedPage() {
           </ResponsiveMasonry>
         </div>
       ) : (
-        <div className="flex flex-col gap-4 justify-center mt-8 items-center">
-          <Confetti mode="fall" />
-          <h2 className="text-2xl">
-            Congratulations you have been matched with
-          </h2>
-          <h3 className="text-3xl text-orange-500">{match.name}</h3>
-          <img src={match.img} alt={match.name} />
+        <div className="grid md:grid-cols-2 gap-8 mt-8 items-center">
+          <div className="flex flex-col gap-4 justify-center items-center">
+            <Confetti mode="fall" />
+            <h3 className="text-3xl text-orange-500">{match.name}</h3>
+            <img
+              src={match.img}
+              alt={match.name}
+              className="w-auto rounded-lg shadow-lg"
+            />
+          </div>
+
+          <div className="relative flex flex-col items-center">
+            <div
+              className="relative bg-blue-500 text-white p-4 rounded-lg shadow-lg w-64 text-center mb-4 
+        before:content-[''] before:absolute before:-bottom-2 before:left-1/2 before:-translate-x-1/2 
+        before:w-0 before:h-0 before:border-t-[10px] before:border-t-blue-500 
+        before:border-l-[10px] before:border-l-transparent before:border-r-[10px] before:border-r-transparent"
+            >
+              <p className="text-lg font-semibold">
+                Congrats! You found your perfect match!
+              </p>
+            </div>
+            <img src="/images/fetchy.png" alt="Fetchy" className="h-32 mt-4" />
+          </div>
         </div>
       )}
     </div>
