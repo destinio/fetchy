@@ -1,5 +1,38 @@
 import { useDogs } from "@/hooks/useDogs";
 import { useState, useEffect } from "react";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { Button } from "./ui/button";
+
+interface IPageControlProps {
+  options: {
+    currentPage: number;
+    totalPages: number;
+    total: number;
+    handlePrevPage: () => void;
+    handleNextPage: () => void;
+  };
+}
+
+function PageControl({
+  options: { currentPage, totalPages, total, handlePrevPage, handleNextPage },
+}: IPageControlProps) {
+  return (
+    <div className="flex justify-around mb-4">
+      <Button
+        onClick={handlePrevPage}
+        disabled={total === 0 || currentPage === 0}
+      >
+        Prev
+      </Button>
+      <p>
+        Page {currentPage + 1} of {totalPages}
+      </p>
+      <Button onClick={handleNextPage} disabled={total === 0}>
+        Next
+      </Button>
+    </div>
+  );
+}
 
 export default function DogsSearchResults() {
   const {
@@ -38,7 +71,7 @@ export default function DogsSearchResults() {
   function handleNextPage() {
     if (!allPages) return;
 
-    const nextIndex = currentPage + 1; // Calculate next page index
+    const nextIndex = currentPage + 1;
 
     if (nextIndex < totalPages) {
       if (nextIndex < allPages.length) {
@@ -53,48 +86,66 @@ export default function DogsSearchResults() {
     }
   }
 
-  console.log(allPages, isDogLoading);
-
   return (
-    <div>
-      <div>
-        <button
-          onClick={handlePrevPage}
-          disabled={total === 0 || currentPage === 0}
-        >
-          Prev
-        </button>
-        <button onClick={handleNextPage} disabled={total === 0}>
-          Next
-        </button>
-      </div>
-      {isLoadingState && <h2>Loading...</h2>}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-        {!isLoadingState ? (
-          allPages[currentPage].map((dog) => {
-            return (
-              <div
-                key={dog.id}
-                className="p-2 border-2 rounded border-slate-600"
-              >
-                <header>
-                  <h3>{dog.name}</h3>
-                </header>
-                <div>
-                  <img src={dog.img} alt={dog.name} />
+    <div className="mb-8">
+      <PageControl
+        options={{
+          currentPage,
+          totalPages,
+          total,
+          handleNextPage,
+          handlePrevPage,
+        }}
+      />
+      <ResponsiveMasonry
+        columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}
+        className="mb-4"
+      >
+        <Masonry>
+          {!isLoadingState ? (
+            allPages[currentPage].map((dog) => {
+              return (
+                <div
+                  key={dog.id}
+                  className="p-2 border-2 rounded border-slate-600"
+                >
+                  <header>
+                    <h3 className="text-orange-500 text-2xl font-bold">
+                      {dog.name}
+                    </h3>
+                  </header>
+                  <div className="mb-8">
+                    <img src={dog.img} alt={dog.name} />
+                  </div>
+                  <div className="space-y-2">
+                    {Object.entries(dog)
+                      .filter(([key]) => !["id", "name", "img"].includes(key)) // Ignore these fields
+                      .map(([key, value]) => (
+                        <div key={key} className="flex justify-between">
+                          <span className="font-semibold capitalize">
+                            {key.replace("_", " ")}:
+                          </span>
+                          <span>{value}</span>
+                        </div>
+                      ))}
+                  </div>
                 </div>
-                <div>
-                  <p>{dog.breed}</p>
-                  <p>{dog.age}</p>
-                  <p>{dog.zip_code}</p>
-                </div>
-              </div>
-            );
-          })
-        ) : (
-          <h2>Loading new results...</h2>
-        )}
-      </div>
+              );
+            })
+          ) : (
+            <h2>Loading new results...</h2>
+          )}
+        </Masonry>
+      </ResponsiveMasonry>
+      <PageControl
+        options={{
+          currentPage,
+          totalPages,
+          total,
+          handleNextPage,
+          handlePrevPage,
+        }}
+      />
     </div>
   );
 }
