@@ -8,7 +8,7 @@ Fetchy is a web application built as part of a take-home assignment for [Fetch R
 It helps dog lovers search for shelter dogs and find their perfect match. Users can browse, filter, 
 and favorite dogs before generating a match.
 
-🚀 **Live Demo:** [Your Vercel Link Here](https://fetchy.destin.io)
+🚀 **Live Demo:** https://fetchy.destin.io
 
 ## ✨ Features
 - 🔍 **Search & Filter:** Users can filter dogs by breed and location.
