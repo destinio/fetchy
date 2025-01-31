@@ -7,7 +7,7 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useToast } from "@/hooks/use-toast";
 import Confetti from "react-confetti-boom";
 import FetchyMsg from "@/components/FetchyMsg";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function InterestedPage() {
   const {
