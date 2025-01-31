@@ -1,6 +1,8 @@
 # 🐶 Fetchy - Find Your Perfect Shelter Dog!
 
-![Fetchy](src/public/images/fetchy.png)
+<p align="center">
+  <img src="public/images/fetchy.png" alt="Fetchy" height="200">
+</p>
 
 Fetchy is a web application built as part of a take-home assignment for [Fetch Rewards](https://fetch.com/). 
 It helps dog lovers search for shelter dogs and find their perfect match. Users can browse, filter, 
