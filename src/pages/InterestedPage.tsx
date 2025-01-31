@@ -4,9 +4,9 @@ import { useDogs } from "@/hooks/useDogs";
 import { IDog } from "@/types";
 import { useState } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import Confetti from "react-confetti-boom";
+import FetchyMsg from "@/components/FetchyMsg";
 
 export default function InterestedPage() {
   const {
@@ -20,15 +20,8 @@ export default function InterestedPage() {
 
   if (interestedDogs.length === 0 && !match) {
     return (
-      <div className="flex flex-col gap-4 text-2xl justify-center items-center mt-32">
-        <h2>There are no dogs you are interested in!</h2>
-        <p>
-          Please navigate to{" "}
-          <Link className="text-orange-500 hover:text-orange-300" to="/">
-            "search"
-          </Link>{" "}
-          to get started
-        </p>
+      <div className="pt-16 md:pt-32">
+        <FetchyMsg message="You haven't selected any dogs yet! Use the navigation bar above to start your search and find your perfect match." />
       </div>
     );
   }
@@ -58,11 +51,13 @@ export default function InterestedPage() {
     <div>
       {!match ? (
         <div>
-          <div className="flex flex-col justify-center items-center py-16">
-            <h2 className="text-xl text-center mb-8">
+          <div className="flex flex-col gap-4 justify-center items-center py-16">
+            <FetchyMsg
+              message="
               Once you see the dogs you are interested go ahead an submit to
               find a match!
-            </h2>
+            "
+            />
             <Button onClick={() => matchDogs()}>Submit</Button>
           </div>
           <ResponsiveMasonry
@@ -119,19 +114,7 @@ export default function InterestedPage() {
             />
           </div>
 
-          <div className="relative flex flex-col items-center">
-            <div
-              className="relative bg-blue-500 text-white p-4 rounded-lg shadow-lg w-64 text-center mb-4 
-        before:content-[''] before:absolute before:-bottom-2 before:left-1/2 before:-translate-x-1/2 
-        before:w-0 before:h-0 before:border-t-[10px] before:border-t-blue-500 
-        before:border-l-[10px] before:border-l-transparent before:border-r-[10px] before:border-r-transparent"
-            >
-              <p className="text-lg font-semibold">
-                Congrats! You found your perfect match!
-              </p>
-            </div>
-            <img src="/images/fetchy.png" alt="Fetchy" className="h-32 mt-4" />
-          </div>
+          <FetchyMsg message="Congrats! You found your perfect match!" />
         </div>
       )}
     </div>

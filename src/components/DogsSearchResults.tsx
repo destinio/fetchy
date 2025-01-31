@@ -2,6 +2,7 @@ import { useDogs } from "@/hooks/useDogs";
 import { useState, useEffect } from "react";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { Button } from "./ui/button";
+import FetchyMsg from "./FetchyMsg";
 
 interface IPageControlProps {
   options: {
@@ -64,7 +65,11 @@ export default function DogsSearchResults() {
   }, [isDogLoading]);
 
   if (!allPages) {
-    return <h2>Please submit some search queries to get started!</h2>;
+    return (
+      <div>
+        <FetchyMsg message="Start by searching for dogs! Once you've selected some favorites, head to your cart to find your perfect match!" />
+      </div>
+    );
   }
 
   if (isDogErrored.status) {
