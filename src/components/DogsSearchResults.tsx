@@ -43,6 +43,8 @@ export default function DogsSearchResults() {
     resultsSize,
     isDogErrored,
     isDogLoading,
+    handleAddInterestedDog,
+    interestedDogs,
   } = useDogs();
   const totalPages = Math.ceil(total / resultsSize);
 
@@ -117,7 +119,7 @@ export default function DogsSearchResults() {
                   <div className="mb-8">
                     <img src={dog.img} alt={dog.name} />
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-2 mb-4">
                     {Object.entries(dog)
                       .filter(([key]) => !["id", "name", "img"].includes(key)) // Ignore these fields
                       .map(([key, value]) => (
@@ -128,6 +130,18 @@ export default function DogsSearchResults() {
                           <span>{value}</span>
                         </div>
                       ))}
+                  </div>
+                  <div>
+                    <Button
+                      onClick={() => handleAddInterestedDog(dog)}
+                      disabled={interestedDogs
+                        .map((dog) => dog.id)
+                        .includes(dog.id)}
+                    >
+                      {interestedDogs.map((dog) => dog.id).includes(dog.id)
+                        ? "Added"
+                        : "Add to Interested"}
+                    </Button>
                   </div>
                 </div>
               );

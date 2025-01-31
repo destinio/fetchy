@@ -12,6 +12,7 @@ import ProtectedLayout from "./layouts/ProtectedLayout.tsx";
 import About from "./pages/About.tsx";
 import PublicLayout from "./layouts/PublicLayout.tsx";
 import { DogsProvider } from "./state/DogsProvider.tsx";
+import InterestedPage from "./pages/InterestedPage.tsx";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
     element: <ProtectedLayout element={<About />} />,
   },
   // PRIVATE ROUTES
+  {
+    path: "/interested",
+    element: <ProtectedLayout element={<InterestedPage />} />,
+  },
   {
     path: "/",
     element: <ProtectedLayout element={<App />} />,
