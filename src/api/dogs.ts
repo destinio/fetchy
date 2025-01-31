@@ -1,4 +1,4 @@
-import { BREEDS_URL, DOGS_URL, SEARCH_URL } from "@/constants";
+import { BREEDS_URL, DOGS_MATCH_URL, DOGS_URL, SEARCH_URL } from "@/constants";
 import { IDog } from "@/types";
 
 // Get Breeds
@@ -85,4 +85,23 @@ export async function searchDogs(options: ISearchOptions) {
   const results = await getDogsInfo(foundDogs.resultIds);
 
   return { ...foundDogs, dogs: results };
+}
+
+export async function getDogsMatch(dogIds: string[]) {
+  const response = await fetch(DOGS_MATCH_URL, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dogIds),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to get dogs match");
+  }
+
+  const data = await response.json();
+
+  return data;
 }

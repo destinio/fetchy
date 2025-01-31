@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App.tsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
+import { Toaster } from "@/components/ui/toaster";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AppProvider } from "./state/AppProvider.tsx";
 import LoginPage from "./pages/Login.tsx";
@@ -43,6 +43,7 @@ createRoot(document.getElementById("root")!).render(
       <AppProvider>
         <DogsProvider>
           <RouterProvider router={router} />
+          <Toaster />
           <ReactQueryDevtools initialIsOpen={false} />
         </DogsProvider>
       </AppProvider>

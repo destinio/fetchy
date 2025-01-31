@@ -30,6 +30,7 @@ export interface IDogsValues {
   interestedDogs: IDog[];
   handleAddInterestedDog: (dog: IDog) => void;
   handleRemoveInterestedDog: (dog: IDog) => void;
+  handleClearInterestedDogs: () => void;
 }
 
 export const DogsContext = React.createContext<IDogsValues>(null!);
@@ -105,6 +106,10 @@ export function DogsProvider({ children }: IDogsProps) {
     setInterestedDog((prev) => prev.filter((d) => d.id !== dog.id));
   }
 
+  function handleClearInterestedDogs() {
+    setInterestedDog([]);
+  }
+
   const value = {
     onSubmit,
     allPages: dogsData?.pages?.map((page) => page.dogs),
@@ -121,6 +126,7 @@ export function DogsProvider({ children }: IDogsProps) {
     interestedDogs: interestedDog,
     handleAddInterestedDog,
     handleRemoveInterestedDog,
+    handleClearInterestedDogs,
   };
 
   return <DogsContext.Provider value={value}>{children}</DogsContext.Provider>;
