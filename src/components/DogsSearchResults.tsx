@@ -10,17 +10,25 @@ interface IPageControlProps {
     total: number;
     handlePrevPage: () => void;
     handleNextPage: () => void;
+    isLoading: boolean;
   };
 }
 
 function PageControl({
-  options: { currentPage, totalPages, total, handlePrevPage, handleNextPage },
+  options: {
+    currentPage,
+    totalPages,
+    total,
+    handlePrevPage,
+    handleNextPage,
+    isLoading,
+  },
 }: IPageControlProps) {
   return (
     <div className="flex justify-around mb-4">
       <Button
         onClick={handlePrevPage}
-        disabled={total === 0 || currentPage === 0}
+        disabled={total === 0 || currentPage === 0 || isLoading}
       >
         Prev
       </Button>
@@ -97,6 +105,7 @@ export default function DogsSearchResults() {
           total,
           handleNextPage,
           handlePrevPage,
+          isLoading: isLoadingState,
         }}
       />
       <ResponsiveMasonry

@@ -1,9 +1,26 @@
 import { Button } from "@/components/ui/button";
 import { useDogs } from "@/hooks/useDogs";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { Link } from "react-router-dom";
 
 export default function InterestedPage() {
   const { interestedDogs, handleRemoveInterestedDog } = useDogs();
+
+  if (interestedDogs.length === 0) {
+    return (
+      <div className="flex flex-col gap-4 text-2xl justify-center items-center mt-32">
+        <h2>There are no dogs you are interested in!</h2>
+        <p>
+          Please navigate to{" "}
+          <Link className="text-orange-500 hover:text-orange-300" to="/">
+            "search"
+          </Link>{" "}
+          to get started
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <ResponsiveMasonry
