@@ -4,9 +4,23 @@ import { z } from "zod";
 import React, { useState } from "react";
 import { IDog } from "@/types";
 
+export interface IParams {
+  breeds: string[] | undefined;
+  zipCodes: string[] | undefined;
+  ageMin: number | undefined;
+  ageMax: number | undefined;
+  size: number | undefined;
+  sort: string | undefined;
+  from: string | undefined;
+}
+
 export interface IDogsValues {
   dogs: IDog[] | undefined;
+  allPages: IDog[][];
   onSubmit: (data: z.infer<typeof DogSearchSchema>) => Promise<void>;
+  nextPage: () => void;
+  prevPage: () => void;
+  total: number;
 }
 
 export const DogsContext = React.createContext<IDogsValues>(null!);
@@ -16,22 +30,27 @@ interface IDogsProps {
 }
 
 export function DogsProvider({ children }: IDogsProps) {
-  const [searchParams, setSearchParams] = useState({
+  const [searchParams, setSearchParams] = useState<IParams>({
     breeds: undefined,
     zipCodes: undefined,
     ageMin: undefined,
     ageMax: undefined,
     size: undefined,
     sort: undefined,
+    from: undefined, // Track where to start pagination
   });
 
-  const [hasSubmitted, setHasSubmitted] = useState(false); // Track if the form has been submitted
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   const {
-    data: dogs,
-    isLoading: _isDogsLoading,
-    isFetching: _isDogsFetching,
-    error: _dogsError,
+    data: dogsData,
+    // isLoading: _isDogsLoading,
+    // isFetching: _isDogsFetching,
+    fetchNextPage,
+    fetchPreviousPage,
+    hasNextPage,
+    hasPreviousPage,
+    // error: _dogsError,
     refetch,
   } = useDogsSearch(searchParams, {
     enabled: hasSubmitted, // Only fetch data after submission
@@ -45,14 +64,35 @@ export function DogsProvider({ children }: IDogsProps) {
       ageMax: data.ageMax ? Number(data.ageMax) : undefined,
       size: data.size ? Number(data.size) : undefined,
       sort: data.sort || undefined,
+      from: undefined,
     };
 
-    setSearchParams(params as any); // Update search params with the form data
-    setHasSubmitted(true); // Mark the form as submitted
-    await refetch(); // Trigger the query manually
+    setSearchParams(params);
+    setHasSubmitted(true);
+
+    await refetch();
   }
 
-  const value = { onSubmit, dogs };
+  function nextPage() {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  }
+
+  function prevPage() {
+    if (hasPreviousPage) {
+      fetchPreviousPage();
+    }
+  }
+
+  const value = {
+    onSubmit,
+    allPages: dogsData?.pages?.map((page) => page.dogs) || [],
+    dogs: dogsData?.pages.flatMap((page) => page.dogs) || [], // Stores all fetched pages separately
+    nextPage,
+    prevPage,
+    total: dogsData?.pages[0]?.total || 0,
+  };
 
   return <DogsContext.Provider value={value}>{children}</DogsContext.Provider>;
 }

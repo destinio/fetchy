@@ -57,6 +57,8 @@ export interface ISearchResponse {
 export async function searchDogs(options: ISearchOptions) {
   const params = new URLSearchParams();
 
+  console.log(options); // here
+
   if (options.breeds) params.append("breeds", options.breeds.join(","));
   if (options.zipCodes) params.append("zipCodes", options.zipCodes.join(","));
   if (options.ageMin !== undefined)
@@ -80,9 +82,9 @@ export async function searchDogs(options: ISearchOptions) {
     throw new Error("Failed to search dogs");
   }
 
-  const foundDogs = await response.json();
+  const foundDogs = (await response.json()) as ISearchResponse;
 
   const results = await getDogsInfo(foundDogs.resultIds);
 
-  return results;
+  return { ...foundDogs, dogs: results };
 }
