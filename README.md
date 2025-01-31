@@ -62,7 +62,7 @@ npm run preview
 ```
 
 ## 🚀 Deployment
-Fetchy is deployed on **Vercel** for seamless performance and scalability. To deploy manually:
+Fetchy is deployed on **Vercel** for seamless performance and scalability.
 
 ## 📜 License
 This project was built for **evaluation purposes** as part of a take-home assignment for **Fetch Rewards**.
