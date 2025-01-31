@@ -16,10 +16,16 @@ export interface IParams {
 
 export interface IDogsValues {
   dogs: IDog[] | undefined;
-  allPages: IDog[][];
+  allPages: IDog[][] | undefined;
   onSubmit: (data: z.infer<typeof DogSearchSchema>) => Promise<void>;
   nextPage: () => void;
   prevPage: () => void;
+  resultsSize: number;
+  isDogLoading: boolean;
+  isDogErrored: {
+    status: boolean;
+    message: string;
+  };
   total: number;
 }
 
@@ -44,13 +50,13 @@ export function DogsProvider({ children }: IDogsProps) {
 
   const {
     data: dogsData,
-    // isLoading: _isDogsLoading,
-    // isFetching: _isDogsFetching,
+    isLoading: isDogsLoading,
+    isFetching: isDogsFetching,
     fetchNextPage,
     fetchPreviousPage,
     hasNextPage,
     hasPreviousPage,
-    // error: _dogsError,
+    error: dogsError,
     refetch,
   } = useDogsSearch(searchParams, {
     enabled: hasSubmitted, // Only fetch data after submission
@@ -87,10 +93,16 @@ export function DogsProvider({ children }: IDogsProps) {
 
   const value = {
     onSubmit,
-    allPages: dogsData?.pages?.map((page) => page.dogs) || [],
-    dogs: dogsData?.pages.flatMap((page) => page.dogs) || [], // Stores all fetched pages separately
+    allPages: dogsData?.pages?.map((page) => page.dogs),
+    dogs: dogsData?.pages.flatMap((page) => page.dogs), // Stores all fetched pages separately
     nextPage,
     prevPage,
+    isDogLoading: isDogsLoading || isDogsFetching,
+    isDogErrored: {
+      status: !!dogsError,
+      message: dogsError?.message ?? "",
+    },
+    resultsSize: searchParams.size || 25,
     total: dogsData?.pages[0]?.total || 0,
   };
 

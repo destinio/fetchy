@@ -57,8 +57,6 @@ export interface ISearchResponse {
 export async function searchDogs(options: ISearchOptions) {
   const params = new URLSearchParams();
 
-  console.log(options); // here
-
   if (options.breeds) params.append("breeds", options.breeds.join(","));
   if (options.zipCodes) params.append("zipCodes", options.zipCodes.join(","));
   if (options.ageMin !== undefined)
